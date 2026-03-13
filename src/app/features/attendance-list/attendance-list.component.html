@@ -1,0 +1,28 @@
+<div class="attendance-container">
+  <div class="header">
+    <h1>Listado de Asistencia</h1>
+    <p>Registros de personas escaneadas con fecha y hora.</p>
+  </div>
+
+  <div class="list" *ngIf="attendance$ | async as records">
+    <p *ngIf="records.length === 0">Todavía no hay asistencias registradas.</p>
+
+    <table *ngIf="records.length > 0">
+      <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>Apellido</th>
+          <th>Fecha y hora</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let record of records">
+          <td>{{ record.nombre }}</td>
+          <td>{{ record.apellido }}</td>
+          <td>{{ (record.timestamp?.toDate ? record.timestamp.toDate() : record.timestamp) | date:'short' }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+

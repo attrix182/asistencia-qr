@@ -1,0 +1,2 @@
+quiero hacer una aplicacion en la cual pueda cargar personas con nombre y apellido, tener un boton que exporte un qr que tenga el siguiente formato {"nombre": "nombre", "apellido": "apellido", "id": "id"} permitir exportar individual y todos
+por otro lado que tenga una funcionalidad que me permita escanear con la camara estos qr y cargue los escaneados en un listado para tomar asistencia. utiliza angular y firebase y hazlo mobile

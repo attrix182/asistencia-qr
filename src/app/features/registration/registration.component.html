@@ -1,0 +1,52 @@
+<div class="registration-container">
+    <div class="header">
+        <h1>Registro Salon</h1>
+        <p>Añada personas y genere sus códigos QR de acceso.</p>
+    </div>
+
+    <div class="card form-card">
+        <form [formGroup]="registrationForm" (ngSubmit)="onSubmit()">
+            <div class="input-group">
+                <label for="nombre">Nombre</label>
+                <input id="nombre" type="text" formControlName="nombre" placeholder="Ej. Juan" />
+            </div>
+
+            <div class="input-group">
+                <label for="apellido">Apellido</label>
+                <input id="apellido" type="text" formControlName="apellido" placeholder="Ej. Pérez" />
+            </div>
+
+            <button type="submit" [disabled]="registrationForm.invalid || isSubmitting" class="btn-primary">
+                {{ isSubmitting ? 'Guardando...' : 'Registrar Persona' }}
+            </button>
+        </form>
+    </div>
+
+    <div class="list-section" *ngIf="people$ | async as people">
+        <div class="list-header">
+            <h2>Personas Registradas ({{ people.length }})</h2>
+            <button *ngIf="people.length > 0" (click)="downloadAll(people)" class="btn-secondary">
+                ⬇️ Descargar Todos (ZIP)
+            </button>
+        </div>
+
+        <div class="people-grid">
+            <div class="person-card" *ngFor="let person of people">
+                <div class="person-info">
+                    <h3>{{ person.nombre }} {{ person.apellido }}</h3>
+                    <span class="id-badge">ID: {{ person.id | slice:0:8 }}...</span>
+                </div>
+
+                <div class="qr-container">
+                    <!-- Ocultamos el div si no queremos que se vea en pantalla, pero debe existir en el DOM para el canvas -->
+                    <qrcode [qrdata]="getQrData(person)" [width]="128" [errorCorrectionLevel]="'M'"
+                        [elementType]="'canvas'" [margin]="2" [id]="'qr-' + person.id"></qrcode>
+                </div>
+
+                <button (click)="downloadIndividualQr(person)" class="btn-icon">
+                    ⬇️ Descargar QR
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

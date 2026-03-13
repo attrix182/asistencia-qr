@@ -1,0 +1,166 @@
+.scanner-container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 1.5rem;
+
+    .header {
+        text-align: center;
+        margin-bottom: 2rem;
+
+        h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #374151;
+            margin-bottom: 0.5rem;
+        }
+
+        p {
+            color: #6b7280;
+        }
+    }
+}
+
+.scanner-card {
+    background: white;
+    border-radius: 1rem;
+    overflow: hidden;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    margin-bottom: 2rem;
+}
+
+.scanner-wrapper {
+    position: relative;
+    background-color: #111827;
+    width: 100%;
+    aspect-ratio: 4/3; // Typical camera aspect ratio
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+
+    ngx-scanner-qrcode {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .scan-overlay {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 65%;
+        aspect-ratio: 1;
+        border: 2px solid rgba(255, 255, 255, 0.3);
+        border-radius: 1rem;
+        box-shadow: 0 0 0 4000px rgba(0, 0, 0, 0.5); // creating a darkened backdrop around focus area
+        pointer-events: none;
+        transition: all 0.3s ease;
+
+        &::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background-color: #6366f1;
+            box-shadow: 0 0 10px #6366f1;
+            animation: scan 2s linear infinite;
+        }
+    }
+
+    &.processing {
+        .scan-overlay {
+            border-color: #10b981;
+            background-color: rgba(16, 185, 129, 0.2);
+
+            &::after {
+                display: none; // Stop scanner line when processing
+            }
+        }
+    }
+}
+
+@keyframes scan {
+    0% {
+        transform: translateY(0);
+    }
+
+    100% {
+        transform: translateY(100%);
+    }
+}
+
+.scanner-controls {
+    padding: 1.5rem;
+    text-align: center;
+
+    .btn-primary {
+        width: 100%;
+        max-width: 300px;
+        background-color: #6366f1;
+        color: white;
+        font-weight: 600;
+        padding: 0.875rem 1.5rem;
+        border: none;
+        border-radius: 0.5rem;
+        cursor: pointer;
+        transition: all 0.2s;
+        font-size: 1rem;
+        box-shadow: 0 4px 6px -1px rgba(99, 102, 241, 0.4);
+
+        &:hover {
+            background-color: #4f46e5;
+            transform: translateY(-1px);
+        }
+
+        &:active {
+            transform: translateY(1px);
+        }
+    }
+}
+
+.message-banner {
+    display: flex;
+    align-items: center;
+    padding: 1rem 1.5rem;
+    border-radius: 0.75rem;
+    margin-top: 1rem;
+    animation: slideUp 0.3s ease-out forwards;
+
+    .icon {
+        font-size: 1.5rem;
+        margin-right: 1rem;
+    }
+
+    p {
+        margin: 0;
+        font-weight: 500;
+        font-size: 1rem;
+    }
+
+    &.success {
+        background-color: #ecfdf5;
+        border: 1px solid #a7f3d0;
+        color: #065f46;
+    }
+
+    &.error {
+        background-color: #fef2f2;
+        border: 1px solid #fecaca;
+        color: #991b1b;
+    }
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(1rem);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

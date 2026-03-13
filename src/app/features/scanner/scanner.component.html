@@ -1,0 +1,34 @@
+<div class="scanner-container">
+    <div class="header">
+        <h1>Escáner de Asistencia</h1>
+        <p>Apunte la cámara hacia el código QR del asistente.</p>
+    </div>
+
+    <div class="scanner-card">
+        <div class="scanner-wrapper" [class.processing]="isProcessing">
+            <!-- ngx-scanner-qrcode component -->
+            <ngx-scanner-qrcode #action="scanner" [config]="scannerConfig"
+                (event)="onEvent($event, action)">
+            </ngx-scanner-qrcode>
+
+            <!-- Overlay / Guidelines -->
+            <div class="scan-overlay"></div>
+        </div>
+
+        <div class="scanner-controls">
+            <button class="btn-primary" (click)="action.isStart ? action.stop() : action.start()">
+                {{ action.isStart ? 'Detener Cámara' : 'Iniciar Cámara' }}
+            </button>
+        </div>
+    </div>
+
+    <!-- Messages -->
+    <div class="message-banner" *ngIf="lastScannedMessage" [class.success]="!lastScannedMessage.includes('Error')"
+        [class.error]="lastScannedMessage.includes('Error')">
+        <div class="icon">
+            <span *ngIf="!lastScannedMessage.includes('Error')">✅</span>
+            <span *ngIf="lastScannedMessage.includes('Error')">❌</span>
+        </div>
+        <p>{{ lastScannedMessage }}</p>
+    </div>
+</div>

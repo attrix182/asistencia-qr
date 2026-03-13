@@ -1,0 +1,13 @@
+/* Estilos globales y reseteos para una apariencia premium mobile-first */
+body {
+    background-color: #f9fafb;
+    /* gray-50 equivalent */
+    color: #111827;
+    /* gray-900 equivalent */
+    font-family: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    margin: 0;
+    padding: 0;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-tap-highlight-color: transparent;
+}
