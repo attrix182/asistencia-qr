@@ -27,6 +27,7 @@
             <th>Nombre</th>
             <th>Apellido</th>
             <th>Hora</th>
+            <th>Acciones</th>
           </tr>
         </thead>
         <tbody>
@@ -39,6 +40,11 @@
                   ? record.timestamp.toDate()
                   : record.timestamp) | date: 'shortTime'
               }}
+            </td>
+            <td>
+              <button type="button" class="btn-secondary" (click)="deleteRecord(record)">
+                Eliminar
+              </button>
             </td>
           </tr>
         </tbody>

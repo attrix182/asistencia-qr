@@ -5,6 +5,7 @@ import { QRCodeComponent } from 'angularx-qrcode';
 import { Observable } from 'rxjs';
 import { Person } from '../../core/models/models';
 import { PeopleService } from '../../core/services/people.service';
+import { AuthService } from '../../core/services/auth.service';
 import * as FileSaver from 'file-saver';
 import JSZip from 'jszip';
 
@@ -20,6 +21,9 @@ export class RegistrationComponent implements OnInit {
   registrationForm: FormGroup;
   private peopleService = inject(PeopleService);
   private fb = inject(FormBuilder);
+  private authService = inject(AuthService);
+
+  isLoggedIn$ = this.authService.isLoggedIn$;
 
   isSubmitting = false;
 
@@ -49,6 +53,10 @@ export class RegistrationComponent implements OnInit {
     } finally {
       this.isSubmitting = false;
     }
+  }
+
+  logout() {
+    this.authService.logout();
   }
 
   getQrData(person: Person): string {

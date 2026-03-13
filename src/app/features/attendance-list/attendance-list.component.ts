@@ -49,6 +49,11 @@ export class AttendanceListComponent implements OnInit {
     this.selectedDate$.next(value || null);
   }
 
+  async deleteRecord(record: AttendanceRecord) {
+    if (!record.id) return;
+    await this.attendanceService.deleteAttendance(record.id);
+  }
+
   private getDateFromTimestamp(timestamp: any): Date {
     if (!timestamp) {
       return new Date(0);

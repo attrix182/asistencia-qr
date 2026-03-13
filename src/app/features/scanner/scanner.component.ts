@@ -40,6 +40,14 @@ export class ScannerComponent {
       const result = JSON.parse(e[0].value);
 
       if (result.id && result.nombre && result.apellido) {
+        const alreadyAttended = await this.attendanceService.hasAttendanceToday(result.id);
+
+        if (alreadyAttended) {
+          this.lastScannedMessage = 'Esta persona ya registró asistencia el día de hoy.';
+          this.isProcessing = false;
+          return;
+        }
+
         this.pendingScan = {
           id: result.id,
           nombre: result.nombre,

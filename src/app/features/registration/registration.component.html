@@ -1,7 +1,12 @@
 <div class="registration-container">
     <div class="header">
-        <h1>Registro Salon</h1>
-        <p>Añada personas y genere sus códigos QR de acceso.</p>
+        <div>
+            <h1>Registro Salon</h1>
+            <p>Añada personas y genere sus códigos QR de acceso.</p>
+        </div>
+        <button *ngIf="isLoggedIn$ | async" (click)="logout()" class="btn-secondary">
+            Cerrar sesión
+        </button>
     </div>
 
     <div class="card form-card">
