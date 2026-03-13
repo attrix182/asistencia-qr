@@ -55,6 +55,11 @@ export class RegistrationComponent implements OnInit {
     }
   }
 
+  async deletePerson(person: Person) {
+    if (!person.id) return;
+    await this.peopleService.deletePerson(person.id);
+  }
+
   logout() {
     this.authService.logout();
   }

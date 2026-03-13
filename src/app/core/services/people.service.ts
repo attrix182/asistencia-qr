@@ -1,5 +1,5 @@
 import { Injectable, inject } from '@angular/core';
-import { Firestore, collection, addDoc, collectionData, query, orderBy } from '@angular/fire/firestore';
+import { Firestore, collection, addDoc, collectionData, query, orderBy, doc, deleteDoc } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { Person } from '../models/models';
 
@@ -19,5 +19,10 @@ export class PeopleService {
 
   async addPerson(person: Omit<Person, 'id'>) {
     return addDoc(this.peopleCollection, person);
+  }
+
+  async deletePerson(id: string): Promise<void> {
+    const personDoc = doc(this.firestore, 'people', id);
+    await deleteDoc(personDoc);
   }
 }

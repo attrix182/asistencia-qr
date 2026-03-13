@@ -26,8 +26,8 @@
     <div class="message-banner" *ngIf="lastScannedMessage" [class.success]="!lastScannedMessage.includes('Error')"
         [class.error]="lastScannedMessage.includes('Error')">
         <div class="icon">
-            <span *ngIf="!lastScannedMessage.includes('Error')">✅</span>
-            <span *ngIf="lastScannedMessage.includes('Error')">❌</span>
+            <i *ngIf="!lastScannedMessage.includes('Error')" class="bi bi-check-circle-fill"></i>
+            <i *ngIf="lastScannedMessage.includes('Error')" class="bi bi-x-circle-fill"></i>
         </div>
         <p>{{ lastScannedMessage }}</p>
     </div>

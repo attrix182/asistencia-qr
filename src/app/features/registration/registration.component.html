@@ -31,7 +31,8 @@
         <div class="list-header">
             <h2>Personas Registradas ({{ people.length }})</h2>
             <button *ngIf="people.length > 0" (click)="downloadAll(people)" class="btn-secondary">
-                ⬇️ Descargar Todos (ZIP)
+                <i class="bi bi-download"></i> &nbsp;
+                <span>Descargar Todos (ZIP)</span>
             </button>
         </div>
 
@@ -48,9 +49,16 @@
                         [elementType]="'canvas'" [margin]="2" [id]="'qr-' + person.id"></qrcode>
                 </div>
 
-                <button (click)="downloadIndividualQr(person)" class="btn-icon">
-                    ⬇️ Descargar QR
-                </button>
+                <div class="person-actions">
+                    <button (click)="downloadIndividualQr(person)" class="btn-icon">
+                        <i class="bi bi-qr-code"></i>
+                        <span> QR</span>
+                    </button>
+                    <button *ngIf="isLoggedIn$ | async" (click)="deletePerson(person)" class="btn-secondary btn-delete">
+                        <i class="bi bi-trash"></i>
+                        <span>Eliminar</span>
+                    </button>
+                </div>
             </div>
         </div>
     </div>
