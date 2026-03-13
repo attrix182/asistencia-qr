@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { Observable, BehaviorSubject, combineLatest, map } from 'rxjs';
 import { AttendanceService } from '../../core/services/attendance.service';
 import { AttendanceRecord } from '../../core/models/models';
+import { AuthService } from '../../core/services/auth.service';
 
 type AttendanceGroup = {
   date: Date;
@@ -18,10 +19,12 @@ type AttendanceGroup = {
 })
 export class AttendanceListComponent implements OnInit {
   private attendanceService = inject(AttendanceService);
+  private authService = inject(AuthService);
   attendance$!: Observable<AttendanceRecord[]>;
   attendanceByDay$!: Observable<AttendanceGroup[]>;
 
   selectedDate$ = new BehaviorSubject<string | null>(null);
+  isLoggedIn$ = this.authService.isLoggedIn$;
 
   ngOnInit(): void {
     this.attendance$ = this.attendanceService.getAttendanceLogs();

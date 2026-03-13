@@ -38,6 +38,7 @@ export class ScannerComponent {
       this.isProcessing = true;
       this.scannerActionRef = action;
       const rawValue = e[0].value;
+      console.log('QR raw value (tipo, valor):', typeof rawValue, rawValue);
 
       if (!rawValue) {
         throw new Error('QR sin contenido');

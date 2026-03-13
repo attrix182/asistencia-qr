@@ -1,13 +1,157 @@
-/* Estilos globales y reseteos para una apariencia premium mobile-first */
+/* ===== Design system: variables ===== */
+:root {
+  --font-sans: 'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif;
+  --color-bg: #f1f5f9;
+  --color-surface: #ffffff;
+  --color-surface-elevated: #ffffff;
+  --color-text: #0f172a;
+  --color-text-muted: #64748b;
+  --color-border: #e2e8f0;
+  --color-border-focus: #6366f1;
+  --color-primary: #6366f1;
+  --color-primary-hover: #4f46e5;
+  --color-primary-light: rgba(99, 102, 241, 0.12);
+  --color-success: #059669;
+  --color-success-bg: #ecfdf5;
+  --color-success-border: #a7f3d0;
+  --color-error: #dc2626;
+  --color-error-bg: #fef2f2;
+  --color-error-border: #fecaca;
+  --color-warning-bg: #fffbeb;
+  --color-warning-border: #fde68a;
+  --radius-sm: 0.5rem;
+  --radius-md: 0.75rem;
+  --radius-lg: 1rem;
+  --radius-xl: 1.25rem;
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.08), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -4px rgba(0, 0, 0, 0.05);
+  --shadow-focus: 0 0 0 3px var(--color-primary-light);
+  --space-content: 1.5rem;
+  --nav-height: 4.5rem;
+  --safe-bottom: env(safe-area-inset-bottom, 0);
+}
+
+/* ===== Base ===== */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
 body {
-    background-color: #f9fafb;
-    /* gray-50 equivalent */
-    color: #111827;
-    /* gray-900 equivalent */
-    font-family: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  margin: 0;
+  padding: 0;
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* ===== Shared component patterns (optional use in components) ===== */
+.page-header {
+  margin-bottom: 1.5rem;
+
+  h1 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--color-text);
+    margin: 0 0 0.25rem 0;
+    letter-spacing: -0.02em;
+  }
+
+  p {
     margin: 0;
-    padding: 0;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    -webkit-tap-highlight-color: transparent;
+    font-size: 0.9375rem;
+    color: var(--color-text-muted);
+  }
+}
+
+.card-base {
+  background: var(--color-surface);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  border: 1px solid var(--color-border);
+}
+
+.input-base {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  font-family: inherit;
+  font-size: 1rem;
+  color: var(--color-text);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  transition: border-color 0.2s, box-shadow 0.2s;
+
+  &::placeholder {
+    color: var(--color-text-muted);
+  }
+
+  &:focus {
+    outline: none;
+    border-color: var(--color-border-focus);
+    box-shadow: var(--shadow-focus);
+  }
+}
+
+.btn-primary-base {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: inherit;
+  font-weight: 600;
+  font-size: 0.9375rem;
+  padding: 0.75rem 1.25rem;
+  border: none;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  background: var(--color-primary);
+  color: #fff;
+  box-shadow: 0 1px 3px rgba(99, 102, 241, 0.35);
+  transition: background 0.2s, transform 0.1s;
+
+  &:hover:not(:disabled) {
+    background: var(--color-primary-hover);
+    transform: translateY(-1px);
+  }
+
+  &:active:not(:disabled) {
+    transform: translateY(0);
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+}
+
+.btn-secondary-base {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: inherit;
+  font-weight: 500;
+  font-size: 0.875rem;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  background: var(--color-border);
+  color: var(--color-text);
+  transition: background 0.2s, transform 0.1s;
+
+  &:hover {
+    background: #cbd5e1;
+    transform: translateY(-1px);
+  }
 }
