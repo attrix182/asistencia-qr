@@ -37,7 +37,25 @@ export class ScannerComponent {
     try {
       this.isProcessing = true;
       this.scannerActionRef = action;
-      const result = JSON.parse(e[0].value);
+      const rawValue = e[0].value;
+
+      if (!rawValue) {
+        throw new Error('QR sin contenido');
+      }
+
+      let result: any;
+
+      try {
+        result = JSON.parse(rawValue);
+
+        // En algunos navegadores/formatos el contenido puede venir como string JSON anidado
+        if (typeof result === 'string') {
+          result = JSON.parse(result);
+        }
+      } catch (parseError) {
+        console.error('Contenido QR recibido (no JSON válido):', rawValue);
+        throw new Error('Formato de QR inválido');
+      }
 
       if (result.id && result.nombre && result.apellido) {
         const alreadyAttended = await this.attendanceService.hasAttendanceToday(result.id);
