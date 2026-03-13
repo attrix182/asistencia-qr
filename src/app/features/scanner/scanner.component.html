@@ -51,4 +51,20 @@
             </div>
         </div>
     </div>
+
+    <!-- Modal ya asistió -->
+    <div class="modal-backdrop" *ngIf="showAlreadyAttendedModal">
+        <div class="modal">
+            <h2>Asistencia ya registrada</h2>
+            <p>
+                Esta persona ya tiene registrada su asistencia el día de hoy.
+            </p>
+
+            <div class="modal-actions">
+                <button class="btn-primary" type="button" (click)="closeAlreadyAttendedModal()">
+                    Entendido
+                </button>
+            </div>
+        </div>
+    </div>
 </div>

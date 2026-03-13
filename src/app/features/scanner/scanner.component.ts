@@ -20,6 +20,7 @@ export class ScannerComponent {
   lastScannedMessage = '';
   pendingScan: { id: string; nombre: string; apellido: string } | null = null;
   showConfirmModal = false;
+  showAlreadyAttendedModal = false;
   private scannerActionRef: any | null = null;
   scannerConfig = {
     fps: 10,
@@ -63,6 +64,12 @@ export class ScannerComponent {
 
         if (alreadyAttended) {
           this.lastScannedMessage = 'Esta persona ya registró asistencia el día de hoy.';
+          this.showAlreadyAttendedModal = true;
+
+          if (this.scannerActionRef) {
+            this.scannerActionRef.pause();
+          }
+
           this.isProcessing = false;
           return;
         }
@@ -116,6 +123,15 @@ export class ScannerComponent {
   cancelAttendance() {
     this.pendingScan = null;
     this.showConfirmModal = false;
+    this.isProcessing = false;
+
+    if (this.scannerActionRef) {
+      this.scannerActionRef.play();
+    }
+  }
+
+  closeAlreadyAttendedModal() {
+    this.showAlreadyAttendedModal = false;
     this.isProcessing = false;
 
     if (this.scannerActionRef) {
