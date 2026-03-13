@@ -8,6 +8,55 @@
   margin-bottom: 1rem;
 }
 
+.filters {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1.25rem;
+  font-size: 0.95rem;
+
+  label {
+    font-weight: 500;
+  }
+
+  input[type='date'] {
+    padding: 0.4rem 0.6rem;
+    border-radius: 0.4rem;
+    border: 1px solid #d0d0d0;
+    background-color: #fff;
+    font-size: 0.95rem;
+    min-width: 11rem;
+    cursor: pointer;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease,
+      background-color 0.15s ease;
+
+    &:hover {
+      border-color: #9c27b0;
+      box-shadow: 0 0 0 1px rgba(156, 39, 176, 0.15);
+    }
+
+    &:focus {
+      outline: none;
+      border-color: #673ab7;
+      box-shadow: 0 0 0 2px rgba(103, 58, 183, 0.2);
+    }
+
+    &::-webkit-calendar-picker-indicator {
+      cursor: pointer;
+    }
+  }
+}
+
+.day-group {
+  margin-top: 1.5rem;
+}
+
+.day-title {
+  margin: 0 0 0.5rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
 table {
   width: 100%;
   border-collapse: collapse;

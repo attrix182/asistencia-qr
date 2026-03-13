@@ -18,6 +18,9 @@ export class ScannerComponent {
   private attendanceService = inject(AttendanceService);
   isProcessing = false;
   lastScannedMessage = '';
+  pendingScan: { id: string; nombre: string; apellido: string } | null = null;
+  showConfirmModal = false;
+  private scannerActionRef: any | null = null;
   scannerConfig = {
     fps: 10,
     vibrate: 200,
@@ -33,25 +36,20 @@ export class ScannerComponent {
 
     try {
       this.isProcessing = true;
+      this.scannerActionRef = action;
       const result = JSON.parse(e[0].value);
 
       if (result.id && result.nombre && result.apellido) {
-        await this.attendanceService.markAttendance({
-          personId: result.id,
+        this.pendingScan = {
+          id: result.id,
           nombre: result.nombre,
           apellido: result.apellido
-        });
+        };
 
-        this.lastScannedMessage = `Asistencia registrada para ${result.nombre} ${result.apellido}.`;
+        this.showConfirmModal = true;
 
-        // Pause the scanner momentarily after a successful scan
-        if (action) {
-          action.pause();
-          setTimeout(() => {
-            this.lastScannedMessage = '';
-            this.isProcessing = false;
-            action.play();
-          }, 2500);
+        if (this.scannerActionRef) {
+          this.scannerActionRef.pause();
         }
       } else {
         throw new Error('Formato de QR inválido');
@@ -60,6 +58,41 @@ export class ScannerComponent {
       console.error('Error procesando QR:', err);
       this.lastScannedMessage = 'Error: QR no válido. Intente de nuevo.';
       this.isProcessing = false;
+    }
+  }
+
+  async confirmAttendance() {
+    if (!this.pendingScan) return;
+
+    try {
+      await this.attendanceService.markAttendance({
+        personId: this.pendingScan.id,
+        nombre: this.pendingScan.nombre,
+        apellido: this.pendingScan.apellido
+      });
+
+      this.lastScannedMessage = `Asistencia registrada para ${this.pendingScan.nombre} ${this.pendingScan.apellido}.`;
+    } catch (err) {
+      console.error('Error guardando asistencia:', err);
+      this.lastScannedMessage = 'Error al guardar la asistencia. Intente de nuevo.';
+    } finally {
+      this.pendingScan = null;
+      this.showConfirmModal = false;
+      this.isProcessing = false;
+
+      if (this.scannerActionRef) {
+        this.scannerActionRef.play();
+      }
+    }
+  }
+
+  cancelAttendance() {
+    this.pendingScan = null;
+    this.showConfirmModal = false;
+    this.isProcessing = false;
+
+    if (this.scannerActionRef) {
+      this.scannerActionRef.play();
     }
   }
 }

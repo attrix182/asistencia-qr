@@ -4,25 +4,46 @@
     <p>Registros de personas escaneadas con fecha y hora.</p>
   </div>
 
-  <div class="list" *ngIf="attendance$ | async as records">
-    <p *ngIf="records.length === 0">Todavía no hay asistencias registradas.</p>
+  <div class="filters">
+    <label for="dateFilter">Filtrar por fecha:</label>
+    <input
+      id="dateFilter"
+      type="date"
+      (change)="onDateChange($event.target.value)"
+    />
+  </div>
 
-    <table *ngIf="records.length > 0">
-      <thead>
-        <tr>
-          <th>Nombre</th>
-          <th>Apellido</th>
-          <th>Fecha y hora</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let record of records">
-          <td>{{ record.nombre }}</td>
-          <td>{{ record.apellido }}</td>
-          <td>{{ (record.timestamp?.toDate ? record.timestamp.toDate() : record.timestamp) | date:'short' }}</td>
-        </tr>
-      </tbody>
-    </table>
+  <div class="list" *ngIf="attendanceByDay$ | async as groups">
+    <p *ngIf="groups.length === 0">Todavía no hay asistencias registradas.</p>
+
+    <div *ngFor="let group of groups" class="day-group">
+      <h2 class="day-title">
+        Asistencias del {{ group.date | date: 'fullDate' }}
+      </h2>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Nombre</th>
+            <th>Apellido</th>
+            <th>Hora</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let record of group.records">
+            <td>{{ record.nombre }}</td>
+            <td>{{ record.apellido }}</td>
+            <td>
+              {{
+                (record.timestamp?.toDate
+                  ? record.timestamp.toDate()
+                  : record.timestamp) | date: 'shortTime'
+              }}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 </div>
 

@@ -31,4 +31,24 @@
         </div>
         <p>{{ lastScannedMessage }}</p>
     </div>
+
+    <!-- Modal de confirmación -->
+    <div class="modal-backdrop" *ngIf="showConfirmModal">
+        <div class="modal">
+            <h2>Confirmar asistencia</h2>
+            <p *ngIf="pendingScan">
+                ¿Registrar asistencia para
+                <strong>{{ pendingScan.nombre }} {{ pendingScan.apellido }}</strong>?
+            </p>
+
+            <div class="modal-actions">
+                <button class="btn-secondary" type="button" (click)="cancelAttendance()">
+                    Cancelar
+                </button>
+                <button class="btn-primary" type="button" (click)="confirmAttendance()">
+                    Confirmar
+                </button>
+            </div>
+        </div>
+    </div>
 </div>
